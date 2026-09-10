@@ -16,7 +16,7 @@ export interface User {
 
 export type CaseStatus = 'New — Needs Triage' | 'In Progress' | 'Under Investigation' | 'Resolved' | 'Closed';
 export type CaseSeverity = 'Low' | 'Medium' | 'High' | 'Critical';
-export type CaseSource = 'Email' | 'Phone Hotline' | 'Web Portal';
+export type CaseSource = 'Email' | 'Hotline';
 
 export interface Case {
   id: string;

@@ -1,4 +1,4 @@
-import { User, Case, Correspondence, InternalNote, Call, AuditLog } from './types';
+import { User, Case, Correspondence, InternalNote, Call, AuditLog, ClientOrganization } from './types';
 import { subDays, subHours, subMinutes, formatISO } from 'date-fns';
 
 const now = new Date();
@@ -34,10 +34,17 @@ export const MOCK_USERS: User[] = [
   },
 ];
 
+export const MOCK_ORGANIZATIONS: ClientOrganization[] = [
+  { id: 'org_1', name: 'Acme Corp', intakeEmail: 'acmecorp@tari.co.in' },
+  { id: 'org_2', name: 'Globex Inc', intakeEmail: 'globex@tari.co.in' },
+  { id: 'org_3', name: 'Stark Industries', intakeEmail: 'stark@tari.co.in' },
+];
+
 export const MOCK_CASES: Case[] = [
   {
     id: 'case_1',
     caseNumber: 'TARI-2023-0042',
+    organizationId: 'org_1',
     status: 'New — Needs Triage',
     description: 'I am concerned about some recent expense reports filed by the regional sales team. Several large entertainment expenses lack proper receipts and seem unusually high for the reported client meetings.',
     source: 'Email',
@@ -49,6 +56,7 @@ export const MOCK_CASES: Case[] = [
   {
     id: 'case_2',
     caseNumber: 'TARI-2023-0041',
+    organizationId: 'org_2',
     status: 'In Progress',
     severity: 'High',
     category: 'Workplace Conduct',
@@ -63,6 +71,7 @@ export const MOCK_CASES: Case[] = [
   {
     id: 'case_3',
     caseNumber: 'TARI-2023-0040',
+    organizationId: 'org_3',
     status: 'Under Investigation',
     severity: 'Critical',
     category: 'Financial Misconduct',
@@ -78,6 +87,7 @@ export const MOCK_CASES: Case[] = [
   {
     id: 'case_4',
     caseNumber: 'TARI-2023-0039',
+    organizationId: 'org_1',
     status: 'Resolved',
     severity: 'Medium',
     category: 'Conflict of Interest',
@@ -91,6 +101,7 @@ export const MOCK_CASES: Case[] = [
   {
     id: 'case_5',
     caseNumber: 'TARI-2023-0043',
+    organizationId: 'org_2',
     status: 'New — Needs Triage',
     description: 'Someone has been leaving the secure server room door propped open after hours.',
     source: 'Phone Hotline',

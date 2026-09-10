@@ -7,14 +7,19 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Link from 'next/link';
 
 export default function CasesPage() {
-  const { cases, activeUser } = useAppStore();
+  const { cases, activeUser, organizations } = useAppStore();
 
   if (!activeUser) return null;
 
   const isInvestigator = activeUser.role === 'Investigator';
-  const displayCases = isInvestigator 
+  const filteredCases = isInvestigator 
     ? cases.filter(c => c.assigneeIds.includes(activeUser.id)) 
     : cases;
+
+  const displayCases = filteredCases.map(c => ({
+    ...c,
+    organizationName: organizations.find(org => org.id === c.organizationId)?.name || 'Unknown'
+  }));
 
   const getSeverityBadge = (severity?: string) => {
     switch (severity) {
@@ -58,6 +63,7 @@ export default function CasesPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Case Number</TableHead>
+                <TableHead>Organization</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Severity</TableHead>
                 <TableHead>Category</TableHead>
@@ -80,6 +86,7 @@ export default function CasesPage() {
                         {c.caseNumber}
                       </Link>
                     </TableCell>
+                    <TableCell>{c.organizationName}</TableCell>
                     <TableCell>{getStatusBadge(c.status)}</TableCell>
                     <TableCell>{getSeverityBadge(c.severity)}</TableCell>
                     <TableCell>{c.category || <span className="text-muted-foreground italic">Unassigned</span>}</TableCell>

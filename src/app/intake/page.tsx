@@ -7,11 +7,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Link from 'next/link';
 
 export default function IntakeQueuePage() {
-  const { cases, activeUser } = useAppStore();
+  const { cases, activeUser, organizations } = useAppStore();
 
-  const intakeCases = cases.filter(c => c.status === 'New — Needs Triage');
+  const intakeCases = cases.filter(c => c.status === 'New — Needs Triage').map(c => ({
+    ...c,
+    organizationName: organizations.find(org => org.id === c.organizationId)?.name || 'Unknown'
+  }));
 
-  if (activeUser?.role !== 'Compliance Admin') {
+  if (!activeUser) return null;
+  if (activeUser.role !== 'Compliance Admin') {
     return (
       <div className="flex h-[50vh] items-center justify-center text-muted-foreground">
         You do not have permission to view the intake queue.
@@ -46,6 +50,7 @@ export default function IntakeQueuePage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Case Number</TableHead>
+                <TableHead>Organization</TableHead>
                 <TableHead>Source</TableHead>
                 <TableHead>Severity</TableHead>
                 <TableHead>Received</TableHead>
@@ -66,6 +71,7 @@ export default function IntakeQueuePage() {
                         {c.caseNumber}
                       </Link>
                     </TableCell>
+                    <TableCell>{c.organizationName}</TableCell>
                     <TableCell>{c.source}</TableCell>
                     <TableCell>{getSeverityBadge(c.severity)}</TableCell>
                     <TableCell className="text-muted-foreground">

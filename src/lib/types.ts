@@ -1,5 +1,11 @@
 export type Role = 'Super Admin' | 'Compliance Admin' | 'Investigator';
 
+export interface ClientOrganization {
+  id: string;
+  name: string;
+  intakeEmail: string;
+}
+
 export interface User {
   id: string;
   name: string;
@@ -15,6 +21,7 @@ export type CaseSource = 'Email' | 'Phone Hotline' | 'Web Portal';
 export interface Case {
   id: string;
   caseNumber: string;
+  organizationId: string;
   status: CaseStatus;
   severity?: CaseSeverity;
   category?: string;

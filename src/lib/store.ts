@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import { User, Case, Correspondence, InternalNote, Call, AuditLog } from './types';
-import { MOCK_USERS, MOCK_CASES, MOCK_CORRESPONDENCE, MOCK_INTERNAL_NOTES, MOCK_CALLS, MOCK_AUDIT_LOGS } from './mock-data';
+import { User, Case, Correspondence, InternalNote, Call, AuditLog, ClientOrganization } from './types';
+import { MOCK_USERS, MOCK_CASES, MOCK_CORRESPONDENCE, MOCK_INTERNAL_NOTES, MOCK_CALLS, MOCK_AUDIT_LOGS, MOCK_ORGANIZATIONS } from './mock-data';
 import { formatISO } from 'date-fns';
 
 interface AppState {
   activeUser: User | null;
   users: User[];
+  organizations: ClientOrganization[];
   cases: Case[];
   correspondences: Correspondence[];
   internalNotes: InternalNote[];
@@ -25,6 +26,7 @@ interface AppState {
 export const useAppStore = create<AppState>((set, get) => ({
   activeUser: null, // Default to null to trigger role selector
   users: MOCK_USERS,
+  organizations: MOCK_ORGANIZATIONS,
   cases: MOCK_CASES,
   correspondences: MOCK_CORRESPONDENCE,
   internalNotes: MOCK_INTERNAL_NOTES,

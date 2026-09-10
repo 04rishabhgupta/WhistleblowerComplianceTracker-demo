@@ -8,8 +8,17 @@ import { AlertCircle, Clock, CheckCircle2, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
 export function ComplianceAdminDashboard() {
-  const { cases, calls } = useAppStore();
+  const { cases, calls, activeUser, organizations } = useAppStore();
 
+  if (!activeUser) return null;
+
+  const intakeCases = cases.filter(c => c.status === 'New — Needs Triage');
+  const recentCases = cases.slice(0, 5).map(c => {
+    return {
+      ...c,
+      organizationName: organizations.find(org => org.id === c.organizationId)?.name || 'Unknown'
+    }
+  });
   const openCases = cases.filter(c => c.status !== 'Resolved' && c.status !== 'Closed');
   const needsTriage = cases.filter(c => c.status === 'New — Needs Triage');
   const highSeverity = cases.filter(c => c.severity === 'High' || c.severity === 'Critical');
@@ -97,19 +106,21 @@ export function ComplianceAdminDashboard() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Case Number</TableHead>
+                  <TableHead>Organization</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Severity</TableHead>
                   <TableHead>Category</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {cases.slice(0, 5).map((c) => (
+                {recentCases.map((c) => (
                   <TableRow key={c.id}>
                     <TableCell className="font-medium">
                       <Link href={`/cases/${c.id}`} className="text-blue-600 hover:underline">
                         {c.caseNumber}
                       </Link>
                     </TableCell>
+                    <TableCell>{c.organizationName}</TableCell>
                     <TableCell>{getStatusBadge(c.status)}</TableCell>
                     <TableCell>{getSeverityBadge(c.severity)}</TableCell>
                     <TableCell>{c.category || <span className="text-muted-foreground italic">Unassigned</span>}</TableCell>

@@ -14,21 +14,25 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 export function TopBar() {
-  const { activeUser, users, setActiveUser, addCase } = useAppStore();
+  const { activeUser, users, organizations, setActiveUser, addCase } = useAppStore();
   const [isSimulateOpen, setIsSimulateOpen] = useState(false);
   const [emailContent, setEmailContent] = useState('');
+  const [targetOrgId, setTargetOrgId] = useState('');
 
   if (!activeUser) return null;
 
   const handleSimulateEmail = () => {
-    if (!emailContent.trim()) return;
+    if (!emailContent.trim() || !targetOrgId) return;
 
     addCase({
+      organizationId: targetOrgId,
       status: 'New — Needs Triage',
       description: emailContent,
       source: 'Email',
@@ -41,6 +45,7 @@ export function TopBar() {
     });
 
     setEmailContent('');
+    setTargetOrgId('');
     setIsSimulateOpen(false);
   };
 
@@ -74,6 +79,21 @@ export function TopBar() {
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="targetOrg">To: (Simulates client-specific intake address)</Label>
+                  <Select value={targetOrgId} onValueChange={(val) => setTargetOrgId(val || '')}>
+                    <SelectTrigger id="targetOrg">
+                      <SelectValue placeholder="Select target email..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {organizations.map(org => (
+                        <SelectItem key={org.id} value={org.id}>
+                          {org.intakeEmail} ({org.name})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
                 <Textarea
                   placeholder="Type a mock whistleblower complaint here..."
                   value={emailContent}
@@ -83,7 +103,7 @@ export function TopBar() {
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setIsSimulateOpen(false)}>Cancel</Button>
-                <Button onClick={handleSimulateEmail}>Simulate Intake</Button>
+                <Button onClick={handleSimulateEmail} disabled={!targetOrgId || !emailContent.trim()}>Simulate Intake</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

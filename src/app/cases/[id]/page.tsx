@@ -7,25 +7,63 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { ArrowLeft, Clock, MessageSquare, Paperclip, PhoneCall, ShieldCheck, Mail, Send } from 'lucide-react';
+import { ArrowLeft, Clock, MessageSquare, Paperclip, PhoneCall, ShieldCheck, Mail, Send, Activity, Flag, Phone } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, use } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 
-export default function CaseDetailPage({ params }: { params: { id: string } }) {
-  const { cases, correspondences, internalNotes, auditLogs, calls, activeUser, addCorrespondence, addInternalNote } = useAppStore();
-  const caseData = cases.find((c) => c.id === params.id);
+export default function CaseDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const unwrappedParams = use(params);
+  const { cases, correspondences, internalNotes, auditLogs, calls, activeUser, organizations, addCorrespondence, addInternalNote } = useAppStore();
+  const caseData = cases.find((c) => c.id === unwrappedParams.id);
   
   if (!caseData || !activeUser) return notFound();
+
+  const organization = organizations.find(org => org.id === caseData.organizationId);
 
   const caseCorrespondences = correspondences.filter(c => c.caseId === caseData.id).sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
   const caseNotes = internalNotes.filter(n => n.caseId === caseData.id).sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
   const caseAuditLogs = auditLogs.filter(l => l.caseId === caseData.id).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   const caseCalls = calls.filter(c => c.caseId === caseData.id);
+
+  const timelineEvents = [
+    {
+      id: `init-${caseData.id}`,
+      type: 'initiation' as const,
+      timestamp: caseData.createdAt,
+      title: 'Case Initiated',
+      description: `Report submitted via ${caseData.source}.`,
+      actor: caseData.reporterEmail || 'Anonymous'
+    },
+    ...caseCorrespondences.map(c => ({
+      id: c.id,
+      type: 'mail' as const,
+      timestamp: c.timestamp,
+      title: c.sender.isStaff ? 'Outgoing Message' : 'Incoming Message',
+      description: c.content,
+      actor: c.sender.name
+    })),
+    ...caseCalls.map(c => ({
+      id: c.id,
+      type: 'call' as const,
+      timestamp: c.timestamp,
+      title: `Hotline Call Linked`,
+      description: `Call duration: ${c.durationSeconds}s. Status: ${c.status}`,
+      actor: 'System / Presenter'
+    })),
+    ...caseAuditLogs.map(l => ({
+      id: l.id,
+      type: 'audit' as const,
+      timestamp: l.timestamp,
+      title: 'System Activity',
+      description: l.action,
+      actor: l.actorId === 'System' ? 'System' : useAppStore.getState().users.find(u => u.id === l.actorId)?.name || 'Unknown User'
+    }))
+  ].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
@@ -96,6 +134,59 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
               </CardContent>
             </Card>
           </div>
+          
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Lifecycle Tracking</CardTitle>
+              <CardDescription>Chronological timeline of all case interactions and updates.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 space-y-8 pb-4 mt-4">
+                {timelineEvents.map((event) => {
+                  let Icon = Activity;
+                  let colorClass = "text-slate-500 bg-slate-100 border-slate-200";
+                  
+                  if (event.type === 'initiation') {
+                    Icon = Flag;
+                    colorClass = "text-teal-600 bg-teal-50 border-teal-200";
+                  } else if (event.type === 'mail') {
+                    Icon = Mail;
+                    colorClass = "text-blue-600 bg-blue-50 border-blue-200";
+                  } else if (event.type === 'call') {
+                    Icon = Phone;
+                    colorClass = "text-purple-600 bg-purple-50 border-purple-200";
+                  } else if (event.type === 'audit') {
+                    Icon = Activity;
+                    colorClass = "text-amber-600 bg-amber-50 border-amber-200";
+                  }
+
+                  return (
+                    <div key={event.id} className="relative pl-8">
+                      <span className={`absolute -left-[17px] flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white ${colorClass}`}>
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-3">
+                          <span className="font-semibold text-slate-900 dark:text-slate-100 text-base">{event.title}</span>
+                          <span className="text-xs font-medium text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                            {new Date(event.timestamp).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
+                          {event.description}
+                        </p>
+                        {event.actor && (
+                          <span className="text-xs font-medium text-slate-500 mt-2">
+                            By: {event.actor}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="correspondence" className="mt-6">

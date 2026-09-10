@@ -17,7 +17,7 @@ export function Sidebar() {
       { name: 'Dashboard', href: '/', icon: LayoutDashboard },
     ];
 
-    if (activeUser.role === 'Compliance Admin') {
+    if (activeUser.role === 'Investigator') {
       return [
         ...baseItems,
         { name: 'Intake Queue', href: '/intake', icon: Inbox },
@@ -27,14 +27,7 @@ export function Sidebar() {
       ];
     }
 
-    if (activeUser.role === 'Investigator') {
-      return [
-        ...baseItems,
-        { name: 'My Cases', href: '/cases', icon: FolderKanban },
-      ];
-    }
-
-    if (activeUser.role === 'Super Admin') {
+    if (activeUser.role === 'SysAdmin') {
       return [
         ...baseItems,
         { name: 'Organization Settings', href: '/settings', icon: Settings },

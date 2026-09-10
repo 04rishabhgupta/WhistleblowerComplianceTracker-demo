@@ -85,7 +85,7 @@ export default function CaseDetailPage({ params }: { params: Promise<{ id: strin
           </div>
           <p className="text-sm text-muted-foreground mt-1">Reported via {caseData.source} on {new Date(caseData.createdAt).toLocaleDateString()}</p>
         </div>
-        {activeUser.role === 'Compliance Admin' && caseData.status === 'New — Needs Triage' && (
+        {activeUser.role === 'Investigator' && caseData.status === 'New — Needs Triage' && (
           <TriageDialog caseId={caseData.id} />
         )}
       </div>
@@ -436,7 +436,7 @@ function TriageDialog({ caseId }: { caseId: string }) {
     toast.success('Case triaged successfully');
   };
 
-  const investigators = users.filter(u => u.role === 'Investigator' || u.role === 'Compliance Admin');
+  const investigators = users.filter(u => u.role === 'Investigator');
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

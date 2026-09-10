@@ -66,7 +66,7 @@ export function TopBar() {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        {activeUser.role === 'Compliance Admin' && (
+        {activeUser.role === 'Investigator' && (
           <Dialog open={isSimulateOpen} onOpenChange={setIsSimulateOpen}>
             <DialogTrigger className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border hidden md:flex bg-primary/5 text-primary hover:bg-primary/10 border-primary/20 h-9 px-3">
               Simulate Incoming Email

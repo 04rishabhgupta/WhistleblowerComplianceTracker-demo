@@ -1,4 +1,4 @@
-export type Role = 'Super Admin' | 'Compliance Admin' | 'Investigator';
+export type Role = 'SysAdmin' | 'Investigator';
 
 export interface ClientOrganization {
   id: string;
@@ -9,6 +9,7 @@ export interface ClientOrganization {
 export interface User {
   id: string;
   name: string;
+  email: string;
   role: Role;
   department?: string;
   avatar: string;

@@ -13,7 +13,7 @@ export default function ReportsPage() {
   const { cases, activeUser, organizations } = useAppStore();
   const [selectedOrg, setSelectedOrg] = useState<string>('all');
 
-  if (!activeUser || (activeUser.role !== 'Compliance Admin' && activeUser.role !== 'Super Admin')) {
+  if (!activeUser || activeUser.role !== 'Investigator') {
     return (
       <div className="flex h-[50vh] items-center justify-center text-muted-foreground">
         You do not have permission to view reports.

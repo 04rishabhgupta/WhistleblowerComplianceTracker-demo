@@ -15,7 +15,7 @@ export default function IntakeQueuePage() {
   }));
 
   if (!activeUser) return null;
-  if (activeUser.role !== 'Compliance Admin') {
+  if (activeUser.role !== 'Investigator') {
     return (
       <div className="flex h-[50vh] items-center justify-center text-muted-foreground">
         You do not have permission to view the intake queue.

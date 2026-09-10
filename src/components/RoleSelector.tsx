@@ -115,6 +115,7 @@ export function RoleSelector() {
                   </AvatarFallback>
                 </Avatar>
                 <h3 className="font-bold text-lg text-slate-900">{user.name}</h3>
+                <p className="text-sm text-slate-500">{user.email}</p>
                 <Badge className="mt-3 mb-2 bg-slate-100 text-slate-600 hover:bg-slate-200 border-none px-3 py-1 font-medium">{user.role}</Badge>
                 {user.department && <span className="text-sm text-slate-500 font-medium">{user.department}</span>}
               </div>

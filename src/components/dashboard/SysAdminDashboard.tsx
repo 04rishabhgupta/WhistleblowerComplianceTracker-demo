@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Settings, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export function SuperAdminDashboard() {
+export function SysAdminDashboard() {
   const { users, organizations } = useAppStore();
 
   return (
@@ -87,7 +87,7 @@ export function SuperAdminDashboard() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={u.role === 'Super Admin' ? 'default' : 'secondary'}>{u.role}</Badge>
+                    <Badge variant={u.role === 'SysAdmin' ? 'default' : 'secondary'}>{u.role}</Badge>
                   </TableCell>
                   <TableCell>{u.department || '—'}</TableCell>
                 </TableRow>

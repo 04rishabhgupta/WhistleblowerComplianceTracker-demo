@@ -7,31 +7,19 @@ export const MOCK_USERS: User[] = [
   {
     id: 'user_1',
     name: 'Priya Sharma',
-    role: 'Super Admin',
-    department: 'Executive',
+    email: 'demo-sys-admin@tari.co.in',
+    role: 'SysAdmin',
+    department: 'Platform Admin',
     avatar: 'PS',
   },
   {
     id: 'user_2',
     name: 'Rohan Mehta',
-    role: 'Compliance Admin',
+    email: 'demo-investigator@tari.co.in',
+    role: 'Investigator',
     department: 'Legal & Compliance',
     avatar: 'RM',
-  },
-  {
-    id: 'user_3',
-    name: 'Ananya Rao',
-    role: 'Investigator',
-    department: 'HR',
-    avatar: 'AR',
-  },
-  {
-    id: 'user_4',
-    name: 'Vikram Singh',
-    role: 'Investigator',
-    department: 'Finance',
-    avatar: 'VS',
-  },
+  }
 ];
 
 export const MOCK_ORGANIZATIONS: ClientOrganization[] = [

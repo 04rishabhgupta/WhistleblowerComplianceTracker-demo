@@ -6,6 +6,9 @@ import { ShieldAlert, ArrowRight, Lock, Inbox, Users, Activity, CheckCircle2 } f
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { AuroraBackground } from '@/components/ui/aurora-background';
+import { motion } from 'motion/react';
+import GlobeDemo from '@/components/ui/globe-demo';
 
 export function RoleSelector() {
   const { users, setActiveUser } = useAppStore();
@@ -18,49 +21,54 @@ export function RoleSelector() {
     <div className="flex min-h-screen w-full flex-col bg-background font-sans overflow-y-auto overflow-x-hidden selection:bg-accent selection:text-white">
       {/* Navigation */}
       <nav className="absolute top-0 w-full z-50 px-6 lg:px-12 py-6 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-white">
-          <ShieldAlert className="h-8 w-8 text-teal-400" />
+        <div className="flex items-center gap-2 text-slate-900 dark:text-white">
+          <ShieldAlert className="h-8 w-8 text-teal-600 dark:text-teal-400" />
           <span className="text-xl font-bold tracking-tight">TARI Ethics</span>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/80">
-          <a href="#features" className="hover:text-white transition-colors">Features</a>
-          <a href="#security" className="hover:text-white transition-colors">Security</a>
-          <Button onClick={scrollToDemo} className="bg-teal-600 hover:bg-teal-500 text-white border-none rounded-full px-6">
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700 dark:text-white/80">
+          <a href="#features" className="hover:text-teal-600 dark:hover:text-white transition-colors">Features</a>
+          <a href="#security" className="hover:text-teal-600 dark:hover:text-white transition-colors">Security</a>
+          <Button onClick={scrollToDemo} className="bg-slate-900 hover:bg-slate-800 dark:bg-teal-600 dark:hover:bg-teal-500 text-white border-none rounded-full px-6">
             Try Demo
           </Button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative w-full pt-32 pb-20 md:pt-48 md:pb-32 px-6 lg:px-12 bg-[#1e1b4b] overflow-hidden flex flex-col items-center justify-center text-center">
-        {/* Abstract Background Elements */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-teal-600/20 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/20 blur-[120px] pointer-events-none" />
-        
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <Badge className="bg-white/10 text-teal-300 border-teal-500/30 mb-6 px-4 py-1 text-sm font-medium rounded-full backdrop-blur-sm">
+      <AuroraBackground className="w-full h-[100vh] lg:h-[80vh] flex flex-col items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0.0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.3,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="relative z-10 max-w-4xl mx-auto flex flex-col items-center px-6 text-center mt-20"
+        >
+          <Badge className="bg-slate-900/5 text-slate-800 dark:text-teal-300 border-slate-900/10 dark:border-teal-500/30 mb-6 px-4 py-1 text-sm font-bold rounded-full backdrop-blur-sm">
             <CheckCircle2 className="w-4 h-4 mr-2 inline-block" />
             SOC2 Type II Certified Platform
           </Badge>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-8">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-black dark:text-white tracking-tight leading-[1.1] mb-8">
             Enterprise-grade <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-indigo-500 dark:from-teal-400 dark:to-indigo-300">
               Whistleblower Management.
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-indigo-100/80 mb-10 max-w-2xl font-light leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-indigo-100/80 mb-10 max-w-2xl font-light leading-relaxed">
             Secure, anonymous, and compliant incident reporting built for modern organizations. Streamline intake, automate triage, and protect your most valuable asset: your integrity.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-            <Button onClick={scrollToDemo} size="lg" className="bg-teal-600 hover:bg-teal-500 text-white rounded-full h-14 px-8 text-base">
+            <Button onClick={scrollToDemo} size="lg" className="bg-slate-900 hover:bg-slate-800 dark:bg-teal-600 dark:hover:bg-teal-500 text-white rounded-full h-14 px-8 text-base">
               Experience the Platform <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <Button variant="outline" size="lg" className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white rounded-full h-14 px-8 text-base backdrop-blur-sm">
+            <Button variant="outline" size="lg" className="border-slate-300 dark:border-white/20 bg-white/50 dark:bg-white/5 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full h-14 px-8 text-base backdrop-blur-sm">
               View Documentation
             </Button>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </AuroraBackground>
 
       {/* Features Section */}
       <section id="features" className="py-24 bg-slate-50 px-6 lg:px-12 relative">
@@ -94,6 +102,9 @@ export function RoleSelector() {
           </div>
         </div>
       </section>
+
+      {/* Global Section */}
+      <GlobeDemo />
 
       {/* Demo Persona Selector */}
       <section id="demo-section" className="py-24 px-6 lg:px-12 bg-white border-t border-slate-200">

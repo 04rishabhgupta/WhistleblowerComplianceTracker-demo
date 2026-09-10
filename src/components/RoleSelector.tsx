@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { motion } from 'motion/react';
 import GlobeDemo from '@/components/ui/globe-demo';
+import BentoGridDemo from '@/components/ui/bento-grid-demo';
 
 export function RoleSelector() {
   const { users, setActiveUser } = useAppStore();
@@ -78,28 +79,7 @@ export function RoleSelector() {
             <p className="text-slate-500 max-w-2xl mx-auto text-lg">Everything your ethics team needs to intake, investigate, and resolve cases seamlessly.</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <FeatureCard 
-              icon={<Inbox className="w-8 h-8 text-teal-600" />}
-              title="Automated Intake"
-              description="Instantly convert emails and hotline calls into structured cases ready for triage."
-            />
-            <FeatureCard 
-              icon={<Lock className="w-8 h-8 text-teal-600" />}
-              title="Secure Correspondence"
-              description="Communicate with anonymous reporters via a secure, encrypted two-way channel."
-            />
-            <FeatureCard 
-              icon={<Users className="w-8 h-8 text-teal-600" />}
-              title="Role-Based Access"
-              description="Strictly scope case access to assigned investigators and compliance officers."
-            />
-            <FeatureCard 
-              icon={<Activity className="w-8 h-8 text-teal-600" />}
-              title="Immutable Audit Trail"
-              description="Every action, view, and modification is logged permanently for compliance audits."
-            />
-          </div>
+          <BentoGridDemo />
         </div>
       </section>
 
@@ -159,14 +139,3 @@ export function RoleSelector() {
   );
 }
 
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
-  return (
-    <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-      <div className="w-14 h-14 rounded-xl bg-teal-50 flex items-center justify-center mb-6">
-        {icon}
-      </div>
-      <h3 className="text-xl font-bold text-slate-900 mb-3">{title}</h3>
-      <p className="text-slate-500 leading-relaxed">{description}</p>
-    </div>
-  );
-}

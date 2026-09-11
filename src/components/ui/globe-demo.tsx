@@ -31,7 +31,7 @@ export default function GlobeDemo() {
     autoRotateSpeed: 0.5,
   };
   const colors = ["#0ea5e9", "#0f766e", "#6366f1"];
-  const sampleArcs = [
+  const sampleArcs = React.useMemo(() => [
     {
       order: 1,
       startLat: -19.885592,
@@ -392,7 +392,7 @@ export default function GlobeDemo() {
       arcAlt: 0.3,
       color: colors[Math.floor(Math.random() * (colors.length - 1))],
     },
-  ];
+  ], [colors]);
 
   return (
     <div className="flex flex-row items-center justify-center py-20 h-screen md:h-auto bg-black relative w-full border-t border-slate-900">

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { motion } from 'motion/react';
 import GlobeDemo from '@/components/ui/globe-demo';
-import BentoGridDemo from '@/components/ui/bento-grid-demo';
+import { FeaturesCarouselDemo } from '@/components/FeaturesCarouselDemo';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
 
 export function RoleSelector() {
@@ -73,15 +73,8 @@ export function RoleSelector() {
       </AuroraBackground>
 
       {/* Features Section */}
-      <section id="features" className="py-24 bg-black px-6 lg:px-12 relative">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Comprehensive Compliance Workflows</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto text-lg">Everything your ethics team needs to intake, investigate, and resolve cases seamlessly.</p>
-          </div>
-
-          <BentoGridDemo />
-        </div>
+      <section id="features" className="py-12 bg-black relative">
+        <FeaturesCarouselDemo />
       </section>
 
       {/* Global Section */}

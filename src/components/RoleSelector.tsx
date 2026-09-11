@@ -10,6 +10,7 @@ import { AuroraBackground } from '@/components/ui/aurora-background';
 import { motion } from 'motion/react';
 import GlobeDemo from '@/components/ui/globe-demo';
 import BentoGridDemo from '@/components/ui/bento-grid-demo';
+import { CardSpotlight } from '@/components/ui/card-spotlight';
 
 export function RoleSelector() {
   const { users, setActiveUser } = useAppStore();
@@ -87,43 +88,57 @@ export function RoleSelector() {
       <GlobeDemo />
 
       {/* Demo Persona Selector */}
-      <section id="demo-section" className="py-24 px-6 lg:px-12 bg-white border-t border-slate-200">
+      <section id="demo-section" className="py-24 px-6 lg:px-12 bg-slate-950 border-t border-slate-900">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col items-center text-center mb-12">
-            <div className="inline-flex items-center justify-center p-3 bg-indigo-50 rounded-2xl mb-6">
-              <ShieldAlert className="w-8 h-8 text-primary" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Interactive Demo Environment</h2>
-            <p className="text-slate-500 max-w-2xl text-lg">
-              To explore the platform, select a persona below. This determines your permissions, dashboard view, and available actions.
-            </p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Interactive Demo Login</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">Select a persona below to authenticate into the platform. These mock credentials give you instant access to different compliance workflows.</p>
           </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          
+          <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
             {users.map((user) => (
-              <div 
-                key={user.id}
-                onClick={() => setActiveUser(user.id)}
-                className="group relative flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-teal-500 hover:shadow-xl hover:shadow-teal-500/10"
-              >
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowRight className="w-5 h-5 text-teal-500" />
-                </div>
-                <Avatar className="h-20 w-20 mb-5 border-4 border-slate-50 group-hover:border-teal-50 transition-colors">
-                  <AvatarFallback className="bg-primary/5 text-primary text-2xl font-bold">
-                    {user.avatar}
-                  </AvatarFallback>
-                </Avatar>
-                <h3 className="font-bold text-lg text-slate-900">{user.name}</h3>
-                <p className="text-sm text-slate-500">{user.email}</p>
-                <Badge className="mt-3 mb-2 bg-slate-100 text-slate-600 hover:bg-slate-200 border-none px-3 py-1 font-medium">{user.role}</Badge>
-                {user.department && <span className="text-sm text-slate-500 font-medium">{user.department}</span>}
+              <div key={user.id} onClick={() => setActiveUser(user.id)} className="cursor-pointer">
+                <CardSpotlight className="h-full w-full flex flex-col items-center justify-center p-8 text-center group">
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                    <ArrowRight className="w-5 h-5 text-teal-400" />
+                  </div>
+                  <Avatar className="h-20 w-20 mb-5 border-4 border-slate-800 group-hover:border-teal-500 transition-colors relative z-20">
+                    <AvatarFallback className="bg-slate-900 text-white text-2xl font-bold">
+                      {user.avatar}
+                    </AvatarFallback>
+                  </Avatar>
+                  <h3 className="font-bold text-xl text-white relative z-20">{user.name}</h3>
+                  <p className="text-sm text-teal-400 font-mono mt-1 relative z-20">{user.email}</p>
+                  <Badge className="mt-4 mb-3 bg-white/10 text-slate-200 hover:bg-white/20 border-none px-4 py-1.5 font-medium relative z-20 text-sm">
+                    {user.role} Access
+                  </Badge>
+                  {user.department && <span className="text-sm text-slate-400 font-medium relative z-20">{user.department}</span>}
+                  
+                  <div className="w-full mt-6 pt-6 border-t border-white/10 text-left relative z-20">
+                    <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-3">Permissions Include</p>
+                    <ul className="text-sm text-slate-300 space-y-2">
+                      {user.role === 'SysAdmin' ? (
+                        <>
+                          <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Platform Configuration</li>
+                          <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> User & Role Management</li>
+                          <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Audit Log Access</li>
+                        </>
+                      ) : (
+                        <>
+                          <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Anonymous Communication</li>
+                          <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Investigation Workspaces</li>
+                          <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Reporting Analytics</li>
+                        </>
+                      )}
+                    </ul>
+                  </div>
+                </CardSpotlight>
               </div>
             ))}
           </div>
           
-          <div className="mt-12 text-center text-sm text-slate-400">
-            <p>Note: This is a frontend UI demo. All data is stored in memory and resets upon page refresh.</p>
+          <div className="mt-12 text-center text-sm text-slate-500">
+            <p>Note: This is a frontend UI demo. All authentication state is stored in memory and resets upon page refresh.</p>
           </div>
         </div>
       </section>

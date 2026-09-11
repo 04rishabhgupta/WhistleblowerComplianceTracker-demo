@@ -20,7 +20,7 @@ export function RoleSelector() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-background font-sans overflow-y-auto overflow-x-hidden selection:bg-accent selection:text-white">
+    <div className="dark flex min-h-screen w-full flex-col bg-black text-foreground font-sans overflow-y-auto overflow-x-hidden selection:bg-accent selection:text-white">
       {/* Navigation */}
       <nav className="absolute top-0 w-full z-50 px-6 lg:px-12 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-900 dark:text-white">
@@ -73,13 +73,13 @@ export function RoleSelector() {
       </AuroraBackground>
 
       {/* Features Section */}
-      <section id="features" className="py-24 bg-slate-50 px-6 lg:px-12 relative">
+      <section id="features" className="py-24 bg-black px-6 lg:px-12 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Comprehensive Compliance Workflows</h2>
             <p className="text-slate-500 max-w-2xl mx-auto text-lg">Everything your ethics team needs to intake, investigate, and resolve cases seamlessly.</p>
           </div>
-          
+
           <BentoGridDemo />
         </div>
       </section>
@@ -88,13 +88,13 @@ export function RoleSelector() {
       <GlobeDemo />
 
       {/* Demo Persona Selector */}
-      <section id="demo-section" className="py-24 px-6 lg:px-12 bg-slate-950 border-t border-slate-900">
+      <section id="demo-section" className="py-24 px-6 lg:px-12 bg-black border-t border-slate-900">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Interactive Demo Login</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">Select a persona below to authenticate into the platform. These mock credentials give you instant access to different compliance workflows.</p>
           </div>
-          
+
           <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
             {users.map((user) => (
               <div key={user.id} onClick={() => setActiveUser(user.id)} className="cursor-pointer">
@@ -113,7 +113,7 @@ export function RoleSelector() {
                     {user.role} Access
                   </Badge>
                   {user.department && <span className="text-sm text-slate-400 font-medium relative z-20">{user.department}</span>}
-                  
+
                   <div className="w-full mt-6 pt-6 border-t border-white/10 text-left relative z-20">
                     <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-3">Permissions Include</p>
                     <ul className="text-sm text-slate-300 space-y-2">
@@ -136,7 +136,7 @@ export function RoleSelector() {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-12 text-center text-sm text-slate-500">
             <p>Note: This is a frontend UI demo. All authentication state is stored in memory and resets upon page refresh.</p>
           </div>
@@ -144,7 +144,7 @@ export function RoleSelector() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 py-12 text-center border-t border-slate-800">
+      <footer className="bg-black py-12 text-center border-t border-slate-900">
         <div className="flex items-center justify-center gap-2 text-slate-400 mb-4">
           <ShieldAlert className="h-6 w-6 text-slate-500" />
           <span className="text-lg font-bold tracking-tight">TARI Ethics</span>

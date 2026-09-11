@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { FloatingCard } from "@/components/ui/floating-card";
 import {
   ShieldCheck,
   Inbox,
@@ -9,78 +9,92 @@ import {
   BarChart,
   Activity
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export default function BentoGridDemo() {
+export default function FeaturesGridDemo() {
   return (
-    <BentoGrid className="max-w-4xl mx-auto">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          icon={item.icon}
-          className={i === 3 || i === 6 ? "md:col-span-2" : ""}
-        />
+        <FloatingCard 
+          key={i} 
+          className={cn(
+            "w-full h-full min-h-[24rem]",
+            (i === 3 || i === 6) ? "lg:col-span-2" : ""
+          )}
+        >
+          <div className="group flex flex-col justify-between space-y-4 rounded-xl border border-slate-800 bg-slate-900 p-6 h-full shadow-lg transition-colors hover:border-teal-500/50">
+            <div className="flex flex-1 w-full h-48 rounded-xl overflow-hidden relative border border-slate-800 mb-4">
+              <Image 
+                src={item.src} 
+                alt={item.title} 
+                fill 
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+            
+            <div className="flex-none">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="p-2 bg-slate-800 rounded-lg">
+                  {item.icon}
+                </div>
+                <div className="font-bold text-lg text-slate-100">
+                  {item.title}
+                </div>
+              </div>
+              <div className="text-sm font-normal text-slate-400">
+                {item.description}
+              </div>
+            </div>
+          </div>
+        </FloatingCard>
       ))}
-    </BentoGrid>
+    </div>
   );
 }
-
-const ImageHeader = ({ src, alt }: { src: string; alt: string }) => (
-  <div className="flex flex-1 w-full h-full min-h-[8rem] sm:min-h-[10rem] rounded-xl overflow-hidden relative group-hover/bento:shadow-md transition-shadow">
-    <Image 
-      src={src} 
-      alt={alt} 
-      fill 
-      className="object-cover transition-transform duration-500 group-hover/bento:scale-105"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    />
-  </div>
-);
 
 const items = [
   {
     title: "Secure Incident Intake",
     description: "Omnichannel case intake spanning email, web portals, and hotlines with end-to-end encryption.",
-    header: <ImageHeader src="/images/bento/secure_intake.jpg" alt="Secure Incident Intake" />,
-    icon: <Inbox className="h-4 w-4 text-teal-600" />,
+    src: "/images/bento/secure_intake.jpg",
+    icon: <Inbox className="h-5 w-5 text-teal-400" />,
   },
   {
     title: "Automated Case Triage",
     description: "Intelligent routing and risk assessment to assign cases to the right compliance officers.",
-    header: <ImageHeader src="/images/bento/automated_triage.jpg" alt="Automated Case Triage" />,
-    icon: <Activity className="h-4 w-4 text-indigo-600" />,
+    src: "/images/bento/automated_triage.jpg",
+    icon: <Activity className="h-5 w-5 text-indigo-400" />,
   },
   {
     title: "Anonymous Correspondence",
     description: "Secure, two-way encrypted communication channels with anonymous whistleblowers.",
-    header: <ImageHeader src="/images/bento/anonymous_messaging.jpg" alt="Anonymous Correspondence" />,
-    icon: <MessageSquare className="h-4 w-4 text-blue-600" />,
+    src: "/images/bento/anonymous_messaging.jpg",
+    icon: <MessageSquare className="h-5 w-5 text-blue-400" />,
   },
   {
     title: "Comprehensive Investigation",
     description:
       "Collaborative workspaces for investigators to document evidence, record interviews, and track findings to resolution.",
-    header: <ImageHeader src="/images/bento/investigation.jpg" alt="Comprehensive Investigation" />,
-    icon: <FileText className="h-4 w-4 text-slate-600 dark:text-slate-400" />,
+    src: "/images/bento/investigation.jpg",
+    icon: <FileText className="h-5 w-5 text-slate-300" />,
   },
   {
     title: "Role-Based Access Control",
     description: "Granular permission models ensuring strict confidentiality and 'need-to-know' case access.",
-    header: <ImageHeader src="/images/bento/rbac.jpg" alt="Role-Based Access Control" />,
-    icon: <Users className="h-4 w-4 text-purple-600" />,
+    src: "/images/bento/rbac.jpg",
+    icon: <Users className="h-5 w-5 text-purple-400" />,
   },
   {
     title: "Real-time Analytics",
     description: "Interactive dashboards tracking SLAs, case volumes, and key compliance metrics.",
-    header: <ImageHeader src="/images/bento/analytics.jpg" alt="Real-time Analytics" />,
-    icon: <BarChart className="h-4 w-4 text-emerald-600" />,
+    src: "/images/bento/analytics.jpg",
+    icon: <BarChart className="h-5 w-5 text-emerald-400" />,
   },
   {
     title: "Immutable Audit Trail",
     description: "Tamper-proof logging of every action, view, and modification for strict regulatory and SOC2 compliance.",
-    header: <ImageHeader src="/images/bento/audit_trail.jpg" alt="Immutable Audit Trail" />,
-    icon: <ShieldCheck className="h-4 w-4 text-rose-600" />,
+    src: "/images/bento/audit_trail.jpg",
+    icon: <ShieldCheck className="h-5 w-5 text-rose-400" />,
   },
 ];

@@ -11,6 +11,7 @@ import { motion } from 'motion/react';
 import GlobeDemo from '@/components/ui/globe-demo';
 import { FeaturesCarouselDemo } from '@/components/FeaturesCarouselDemo';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
+import { LargeNameFooter } from '@/components/ui/large-name-footer';
 
 export function RoleSelector() {
   const { users, setActiveUser } = useAppStore();
@@ -25,7 +26,7 @@ export function RoleSelector() {
       <nav className="absolute top-0 w-full z-50 px-6 lg:px-12 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-900 dark:text-white">
           <ShieldAlert className="h-8 w-8 text-teal-600 dark:text-teal-400" />
-          <span className="text-xl font-bold tracking-tight">TARI Ethics</span>
+          <span className="text-xl font-bold tracking-tight">TARI WB</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700 dark:text-white/80">
           <a href="#features" className="hover:text-teal-600 dark:hover:text-white transition-colors">Features</a>
@@ -137,13 +138,7 @@ export function RoleSelector() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black py-12 text-center border-t border-slate-900">
-        <div className="flex items-center justify-center gap-2 text-slate-400 mb-4">
-          <ShieldAlert className="h-6 w-6 text-slate-500" />
-          <span className="text-lg font-bold tracking-tight">TARI Ethics</span>
-        </div>
-        <p className="text-slate-500 text-sm">© {new Date().getFullYear()} Thought Arbitrage Consulting. All rights reserved.</p>
-      </footer>
+      <LargeNameFooter />
     </div>
   );
 }

@@ -76,8 +76,8 @@ export function RoleSelector() {
       <section id="features" className="py-24 bg-black px-6 lg:px-12 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Comprehensive Compliance Workflows</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">Everything your ethics team needs to intake, investigate, and resolve cases seamlessly.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Comprehensive Compliance Workflows</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">Everything your ethics team needs to intake, investigate, and resolve cases seamlessly.</p>
           </div>
 
           <BentoGridDemo />

@@ -105,8 +105,8 @@ export function InvestigatorDashboard() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Case Number</TableHead>
                   <TableHead>Organization</TableHead>
+                  <TableHead>Case Number</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Severity</TableHead>
                   <TableHead>Category</TableHead>
@@ -115,12 +115,12 @@ export function InvestigatorDashboard() {
               <TableBody>
                 {recentCases.map((c) => (
                   <TableRow key={c.id}>
+                    <TableCell>{c.organizationName}</TableCell>
                     <TableCell className="font-medium">
                       <Link href={`/cases/${c.id}`} className="text-blue-600 hover:underline">
                         {c.caseNumber}
                       </Link>
                     </TableCell>
-                    <TableCell>{c.organizationName}</TableCell>
                     <TableCell>{getStatusBadge(c.status)}</TableCell>
                     <TableCell>{getSeverityBadge(c.severity)}</TableCell>
                     <TableCell>{c.category || <span className="text-muted-foreground italic">Unassigned</span>}</TableCell>

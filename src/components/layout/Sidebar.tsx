@@ -6,7 +6,7 @@ import { useAppStore } from '@/lib/store';
 import { LayoutDashboard, Inbox, PhoneCall, FolderKanban, Settings, Users, FileText, ShieldAlert } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export function Sidebar() {
+export function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const { activeUser } = useAppStore();
 
@@ -41,7 +41,7 @@ export function Sidebar() {
   const navItems = getNavItems();
 
   return (
-    <div className="flex h-screen w-64 flex-col border-r border-border bg-sidebar text-sidebar-foreground">
+    <div className={cn("flex h-screen w-64 flex-col border-r border-border bg-sidebar text-sidebar-foreground", className)}>
       <div className="flex h-14 items-center border-b border-border px-4">
         <ShieldAlert className="mr-2 h-6 w-6 text-primary" />
         <span className="text-lg font-bold tracking-tight text-primary">TARI Ethics</span>

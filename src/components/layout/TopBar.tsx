@@ -17,6 +17,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sidebar } from './Sidebar';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -52,10 +54,15 @@ export function TopBar() {
   return (
     <header className="flex h-14 items-center justify-between border-b border-border bg-card px-4 lg:px-6">
       <div className="flex flex-1 items-center gap-4">
-        <Button variant="ghost" size="icon" className="lg:hidden">
-          <Menu className="h-5 w-5" />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
+        <Sheet>
+          <SheetTrigger render={<Button variant="ghost" size="icon" className="lg:hidden" />}>
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Toggle menu</span>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 w-64 bg-sidebar">
+            <Sidebar className="w-full h-full border-none" />
+          </SheetContent>
+        </Sheet>
         <div className="w-full max-w-sm relative hidden sm:flex items-center">
           <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
           <Input

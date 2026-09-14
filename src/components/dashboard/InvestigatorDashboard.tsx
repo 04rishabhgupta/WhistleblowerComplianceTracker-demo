@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useAppStore } from '@/lib/store';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +20,14 @@ export function InvestigatorDashboard() {
       organizationName: organizations.find(org => org.id === c.organizationId)?.name || 'Unknown'
     }
   });
+
+  const groupedRecentCases = recentCases.reduce((acc, c) => {
+    if (!acc[c.organizationName]) {
+      acc[c.organizationName] = [];
+    }
+    acc[c.organizationName].push(c);
+    return acc;
+  }, {} as Record<string, typeof recentCases>);
   const openCases = cases.filter(c => c.status !== 'Resolved' && c.status !== 'Closed');
   const needsTriage = cases.filter(c => c.status === 'New — Needs Triage');
   const highSeverity = cases.filter(c => c.severity === 'High' || c.severity === 'Critical');
@@ -105,26 +114,34 @@ export function InvestigatorDashboard() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Organization</TableHead>
-                  <TableHead>Case Number</TableHead>
+                  <TableHead>Case / Organization</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Severity</TableHead>
                   <TableHead>Category</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recentCases.map((c) => (
-                  <TableRow key={c.id}>
-                    <TableCell>{c.organizationName}</TableCell>
-                    <TableCell className="font-medium">
-                      <Link href={`/cases/${c.id}`} className="text-blue-600 hover:underline">
-                        {c.caseNumber}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{getStatusBadge(c.status)}</TableCell>
-                    <TableCell>{getSeverityBadge(c.severity)}</TableCell>
-                    <TableCell>{c.category || <span className="text-muted-foreground italic">Unassigned</span>}</TableCell>
-                  </TableRow>
+                {Object.entries(groupedRecentCases).map(([orgName, orgCases]) => (
+                  <React.Fragment key={orgName}>
+                    <TableRow className="bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900/50">
+                      <TableCell colSpan={4} className="font-semibold text-slate-700 dark:text-slate-300">
+                        {orgName}
+                      </TableCell>
+                    </TableRow>
+                    {orgCases.map((c) => (
+                      <TableRow key={c.id}>
+                        <TableCell className="pl-8 font-medium">
+                          <Link href={`/cases/${c.id}`} className="text-blue-600 hover:underline flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+                            {c.caseNumber}
+                          </Link>
+                        </TableCell>
+                        <TableCell>{getStatusBadge(c.status)}</TableCell>
+                        <TableCell>{getSeverityBadge(c.severity)}</TableCell>
+                        <TableCell>{c.category || <span className="text-muted-foreground italic">Unassigned</span>}</TableCell>
+                      </TableRow>
+                    ))}
+                  </React.Fragment>
                 ))}
               </TableBody>
             </Table>

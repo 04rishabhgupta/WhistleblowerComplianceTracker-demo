@@ -6,35 +6,35 @@ const now = new Date();
 export const MOCK_USERS: User[] = [
   {
     id: 'user_1',
-    name: 'Priya Sharma',
-    email: 'demo-sys-admin@tari.co.in',
+    name: 'Platform Admin',
+    email: 'sys-admin@tari.co.in',
     role: 'SysAdmin',
     department: 'Platform Admin',
-    avatar: 'PS',
+    avatar: 'PA',
   },
   {
     id: 'user_2',
-    name: 'Rohan Mehta',
-    email: 'demo-investigator@tari.co.in',
+    name: 'Lead Investigator',
+    email: 'lead.investigator@tari.co.in',
     role: 'Investigator',
     department: 'Legal & Compliance',
-    avatar: 'RM',
+    avatar: 'LI',
   },
   {
     id: 'user_3',
-    name: 'Ananya Rao',
-    email: 'ananya.rao@tari.co.in',
+    name: 'HR Investigator',
+    email: 'hr.investigator@tari.co.in',
     role: 'Investigator',
     department: 'HR Compliance',
-    avatar: 'AR',
+    avatar: 'HI',
   },
   {
     id: 'user_4',
-    name: 'Kabir Singh',
-    email: 'kabir.s@tari.co.in',
+    name: 'Financial Auditor',
+    email: 'financial.auditor@tari.co.in',
     role: 'Investigator',
     department: 'Financial Audit',
-    avatar: 'KS',
+    avatar: 'FA',
   }
 ];
 
@@ -203,41 +203,41 @@ export const MOCK_CORRESPONDENCE: Correspondence[] = [
   
   // Case 2 Correspondence
   { id: 'corr_2', caseId: 'case_2', sender: { name: 'Hotline Transcriber', email: 'system@tari.co.in', isStaff: true }, content: 'Caller stated that the marketing director frequently makes inappropriate comments about female colleagues\' appearances during Monday standups. Caller refused to leave a name for fear of being fired.', timestamp: formatISO(subDays(now, 15)) },
-  { id: 'corr_3', caseId: 'case_2', sender: { name: 'Ananya Rao', email: 'ananya.rao@tari.co.in', isStaff: true }, content: 'We need to speak with you to gather more specifics. We can assure you full anonymity. Could you share dates or specific quotes that were used?', timestamp: formatISO(subDays(now, 14)) },
+  { id: 'corr_3', caseId: 'case_2', sender: { name: 'HR Investigator', email: 'hr.investigator@tari.co.in', isStaff: true }, content: 'We need to speak with you to gather more specifics. We can assure you full anonymity. Could you share dates or specific quotes that were used?', timestamp: formatISO(subDays(now, 14)) },
   { id: 'corr_4', caseId: 'case_2', sender: { name: 'Anonymous', email: 'anon123@secure.com', isStaff: false }, content: 'Last Monday, he said some things about my dress. I will upload a recording of the meeting if you can guarantee he won\'t know it came from me.', timestamp: formatISO(subDays(now, 10)) },
-  { id: 'corr_5', caseId: 'case_2', sender: { name: 'Ananya Rao', email: 'ananya.rao@tari.co.in', isStaff: true }, content: 'You have our guarantee. Please upload the recording via this secure drop-link.', timestamp: formatISO(subDays(now, 9)) },
+  { id: 'corr_5', caseId: 'case_2', sender: { name: 'HR Investigator', email: 'hr.investigator@tari.co.in', isStaff: true }, content: 'You have our guarantee. Please upload the recording via this secure drop-link.', timestamp: formatISO(subDays(now, 9)) },
   
   // Case 4 Correspondence
   { id: 'corr_6', caseId: 'case_4', sender: { name: 'System', email: 'audit_alert@tari-ethics.com', isStaff: false }, content: 'Discovered discrepancies in the Q3 vendor payouts. Payments were routed to an unapproved vendor entity in Singapore.', timestamp: formatISO(subDays(now, 30)) },
-  { id: 'corr_7', caseId: 'case_4', sender: { name: 'Kabir Singh', email: 'kabir.s@tari.co.in', isStaff: true }, content: 'Thank you for your report. We take these matters seriously. Can you provide the names of the specific vendor entities involved?', timestamp: formatISO(subDays(now, 29)) },
+  { id: 'corr_7', caseId: 'case_4', sender: { name: 'Financial Auditor', email: 'financial.auditor@tari.co.in', isStaff: true }, content: 'Thank you for your report. We take these matters seriously. Can you provide the names of the specific vendor entities involved?', timestamp: formatISO(subDays(now, 29)) },
   { id: 'corr_8', caseId: 'case_4', sender: { name: 'Audit Team', email: 'audit_alert@tari-ethics.com', isStaff: false }, content: 'The vendor in question is listed as "Apex Consulting Pte Ltd". Total routed was $450,000 across 3 wire transfers.', timestamp: formatISO(subDays(now, 28)) },
-  { id: 'corr_9', caseId: 'case_4', sender: { name: 'Kabir Singh', email: 'kabir.s@tari.co.in', isStaff: true }, content: 'Understood. We are freezing accounts associated with that vendor while we investigate.', timestamp: formatISO(subDays(now, 25)) },
+  { id: 'corr_9', caseId: 'case_4', sender: { name: 'Financial Auditor', email: 'financial.auditor@tari.co.in', isStaff: true }, content: 'Understood. We are freezing accounts associated with that vendor while we investigate.', timestamp: formatISO(subDays(now, 25)) },
   
   // Case 5 Correspondence
   { id: 'corr_10', caseId: 'case_5', sender: { name: 'Hotline Transcriber', email: 'system@tari.co.in', isStaff: true }, content: 'Caller witnessed IT admin John Doe downloading a massive SQL dump of user data onto a personal USB drive on his last day of work.', timestamp: formatISO(subMonths(now, 3)) },
-  { id: 'corr_11', caseId: 'case_5', sender: { name: 'Priya Sharma', email: 'demo-sys-admin@tari.co.in', isStaff: true }, content: 'We are initiating an emergency DLP audit. Thank you for reporting this immediately.', timestamp: formatISO(subDays(subMonths(now, 3), -1)) },
-  { id: 'corr_12', caseId: 'case_5', sender: { name: 'Rohan Mehta', email: 'demo-investigator@tari.co.in', isStaff: true }, content: 'Update: We have engaged legal counsel and sent a cease-and-desist letter to the former employee. The drive was surrendered.', timestamp: formatISO(subMonths(now, 2)) },
+  { id: 'corr_11', caseId: 'case_5', sender: { name: 'Platform Admin', email: 'sys-admin@tari.co.in', isStaff: true }, content: 'We are initiating an emergency DLP audit. Thank you for reporting this immediately.', timestamp: formatISO(subDays(subMonths(now, 3), -1)) },
+  { id: 'corr_12', caseId: 'case_5', sender: { name: 'Lead Investigator', email: 'lead.investigator@tari.co.in', isStaff: true }, content: 'Update: We have engaged legal counsel and sent a cease-and-desist letter to the former employee. The drive was surrendered.', timestamp: formatISO(subMonths(now, 2)) },
   
   // Case 7 Correspondence
   { id: 'corr_13', caseId: 'case_7', sender: { name: 'Hotline Transcriber', email: 'system@tari.co.in', isStaff: true }, content: 'Night shift worker reported that the new solvent used in the painting bay is being dumped straight into the drain instead of the hazmat barrels.', timestamp: formatISO(subMonths(now, 4.5)) },
-  { id: 'corr_14', caseId: 'case_7', sender: { name: 'Rohan Mehta', email: 'demo-investigator@tari.co.in', isStaff: true }, content: 'Can you specify which bay and who gave the order to dump the solvent?', timestamp: formatISO(subDays(subMonths(now, 4.5), -1)) },
+  { id: 'corr_14', caseId: 'case_7', sender: { name: 'Lead Investigator', email: 'lead.investigator@tari.co.in', isStaff: true }, content: 'Can you specify which bay and who gave the order to dump the solvent?', timestamp: formatISO(subDays(subMonths(now, 4.5), -1)) },
   { id: 'corr_15', caseId: 'case_7', sender: { name: 'Anonymous Worker', email: 'night_shift_anon@gmail.com', isStaff: false }, content: 'Bay 4. The shift supervisor, Mark, said the barrels were too expensive to replace weekly.', timestamp: formatISO(subDays(subMonths(now, 4.5), -5)) },
   
   // Case 9 Correspondence
   { id: 'corr_16', caseId: 'case_9', sender: { name: 'Sales Rep', email: 'tired_sales@proton.me', isStaff: false }, content: 'I have text messages from the regional manager demanding we log off the time tracking software but continue making cold calls on Saturdays.', timestamp: formatISO(subDays(now, 25)) },
-  { id: 'corr_17', caseId: 'case_9', sender: { name: 'Ananya Rao', email: 'ananya.rao@tari.co.in', isStaff: true }, content: 'Please upload screenshots of these text messages to the portal securely.', timestamp: formatISO(subDays(now, 24)) },
+  { id: 'corr_17', caseId: 'case_9', sender: { name: 'HR Investigator', email: 'hr.investigator@tari.co.in', isStaff: true }, content: 'Please upload screenshots of these text messages to the portal securely.', timestamp: formatISO(subDays(now, 24)) },
   { id: 'corr_18', caseId: 'case_9', sender: { name: 'Sales Rep', email: 'tired_sales@proton.me', isStaff: false }, content: 'Uploaded 4 screenshots. Please keep my name out of this, I need this job.', timestamp: formatISO(subDays(now, 22)) }
 ];
 
 export const MOCK_INTERNAL_NOTES: InternalNote[] = [
   // Case 2 Notes
-  { id: 'note_1', caseId: 'case_2', senderId: 'user_2', content: 'Assigned Ananya from HR to assist with this conduct issue. Given the sensitivity, we need to interview the reporter carefully without exposing their identity.', timestamp: formatISO(subDays(now, 14)) },
+  { id: 'note_1', caseId: 'case_2', senderId: 'user_2', content: 'Assigned HR Investigator to assist with this conduct issue. Given the sensitivity, we need to interview the reporter carefully without exposing their identity.', timestamp: formatISO(subDays(now, 14)) },
   { id: 'note_2', caseId: 'case_2', senderId: 'user_3', content: 'I will prepare an interview script and reach out via the secure portal today.', timestamp: formatISO(subHours(now, 10)) },
   
   // Case 4 Notes
   { id: 'note_3', caseId: 'case_4', senderId: 'user_4', content: 'I have pulled the AP logs for Q3. There are indeed 3 transactions matching this description totaling $450,000.', timestamp: formatISO(subDays(now, 28)) },
   { id: 'note_4', caseId: 'case_4', senderId: 'user_4', content: 'I checked the company registry in Singapore. The company was incorporated only 4 months ago, and the registered director shares a last name with our VP of Sales.', timestamp: formatISO(subDays(now, 20)) },
-  { id: 'note_5', caseId: 'case_4', senderId: 'user_2', content: 'Good catch Kabir. I am escalating this to the board ethics committee immediately.', timestamp: formatISO(subDays(now, 19)) },
+  { id: 'note_5', caseId: 'case_4', senderId: 'user_2', content: 'Good catch. I am escalating this to the board ethics committee immediately.', timestamp: formatISO(subDays(now, 19)) },
   
   // Case 5 Notes
   { id: 'note_6', caseId: 'case_5', senderId: 'user_1', content: 'DLP logs confirm a 4GB data transfer over USB on the employee\'s final day. Engaging external forensic team.', timestamp: formatISO(subMonths(now, 3)) },
@@ -275,12 +275,12 @@ export const MOCK_AUDIT_LOGS: AuditLog[] = [
   // Case 2
   { id: 'audit_2', caseId: 'case_2', actorId: 'System', action: 'Case created from Hotline intake. Call SID: CA123...', timestamp: formatISO(subDays(now, 15)) },
   { id: 'audit_3', caseId: 'case_2', actorId: 'user_2', action: 'Triaged case. Set severity to High, category to Workplace Conduct.', timestamp: formatISO(subDays(now, 14)) },
-  { id: 'audit_4', caseId: 'case_2', actorId: 'user_2', action: 'Assigned user_3 (Ananya Rao) to the case.', timestamp: formatISO(subDays(now, 14)) },
+  { id: 'audit_4', caseId: 'case_2', actorId: 'user_2', action: 'Assigned user_3 (HR Investigator) to the case.', timestamp: formatISO(subDays(now, 14)) },
   { id: 'audit_5', caseId: 'case_2', actorId: 'user_3', action: 'Sent secure message to reporter requesting evidence.', timestamp: formatISO(subDays(now, 14)) },
   
   // Case 4
   { id: 'audit_6', caseId: 'case_4', actorId: 'System', action: 'Case automatically created from Email intake.', timestamp: formatISO(subDays(now, 30)) },
-  { id: 'audit_7', caseId: 'case_4', actorId: 'user_2', action: 'Assigned user_4 (Kabir Singh) for financial audit support.', timestamp: formatISO(subDays(now, 29)) },
+  { id: 'audit_7', caseId: 'case_4', actorId: 'user_2', action: 'Assigned user_4 (Financial Auditor) for financial audit support.', timestamp: formatISO(subDays(now, 29)) },
   { id: 'audit_8', caseId: 'case_4', actorId: 'user_4', action: 'Added internal note regarding AP logs.', timestamp: formatISO(subDays(now, 28)) },
   { id: 'audit_9', caseId: 'case_4', actorId: 'user_4', action: 'Added internal note regarding Singapore company registry.', timestamp: formatISO(subDays(now, 20)) },
   { id: 'audit_10', caseId: 'case_4', actorId: 'user_2', action: 'Escalated case status to Under Investigation.', timestamp: formatISO(subDays(now, 19)) },

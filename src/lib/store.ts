@@ -21,6 +21,7 @@ interface AppState {
   addInternalNote: (note: Omit<InternalNote, 'id' | 'timestamp'>) => void;
   linkCallToCase: (callId: string, caseId: string) => void;
   addAuditLog: (log: Omit<AuditLog, 'id' | 'timestamp'>) => void;
+  addOrganization: (org: Omit<ClientOrganization, 'id'>) => void;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -130,5 +131,13 @@ export const useAppStore = create<AppState>((set, get) => ({
       timestamp: formatISO(new Date()),
     };
     set((state) => ({ auditLogs: [newLog, ...state.auditLogs] }));
+  },
+
+  addOrganization: (orgData) => {
+    const newOrg: ClientOrganization = {
+      ...orgData,
+      id: `org_${Math.random().toString(36).substr(2, 9)}`,
+    };
+    set((state) => ({ organizations: [...state.organizations, newOrg] }));
   },
 }));

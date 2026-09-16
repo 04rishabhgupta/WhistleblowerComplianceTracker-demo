@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/lib/store';
-import { LayoutDashboard, Inbox, PhoneCall, FolderKanban, Settings, Users, FileText, ShieldAlert } from 'lucide-react';
+import { LayoutDashboard, Inbox, PhoneCall, FolderKanban, Settings, Users, FileText, ShieldAlert, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Sidebar({ className }: { className?: string }) {
@@ -24,6 +24,7 @@ export function Sidebar({ className }: { className?: string }) {
         { name: 'Unlinked Calls', href: '/calls', icon: PhoneCall },
         { name: 'All Cases', href: '/cases', icon: FolderKanban },
         { name: 'Reports', href: '/reports', icon: FileText },
+        { name: 'Client Organisations', href: '/organizations', icon: Building2 },
       ];
     }
 

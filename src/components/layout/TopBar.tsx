@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Search, Menu } from 'lucide-react';
+import { Bell, Search, Menu, LogOut } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuGroup,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -132,24 +133,34 @@ export function TopBar() {
             <span className="hidden text-sm font-medium sm:block">{activeUser.name}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>
-              <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">{activeUser.name}</p>
-                <p className="text-xs leading-none text-muted-foreground">{activeUser.role}</p>
-              </div>
-            </DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">{activeUser.name}</p>
+                  <p className="text-xs leading-none text-muted-foreground">{activeUser.role}</p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel className="text-xs text-muted-foreground">Switch Persona (Demo)</DropdownMenuLabel>
+              {users.map((user) => (
+                <DropdownMenuItem
+                  key={user.id}
+                  onClick={() => setActiveUser(user.id)}
+                  className="flex items-center justify-between cursor-pointer"
+                >
+                  <span>{user.name}</span>
+                  <span className="text-xs text-muted-foreground">{user.role}</span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-xs text-muted-foreground">Switch Persona (Demo)</DropdownMenuLabel>
-            {users.map((user) => (
-              <DropdownMenuItem
-                key={user.id}
-                onClick={() => setActiveUser(user.id)}
-                className="flex items-center justify-between cursor-pointer"
-              >
-                <span>{user.name}</span>
-                <span className="text-xs text-muted-foreground">{user.role}</span>
-              </DropdownMenuItem>
-            ))}
+            <DropdownMenuItem
+              onClick={() => setActiveUser(null)}
+              className="text-destructive focus:bg-destructive/10 cursor-pointer"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

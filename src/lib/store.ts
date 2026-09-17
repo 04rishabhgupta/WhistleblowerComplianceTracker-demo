@@ -15,7 +15,7 @@ interface AppState {
   auditLogs: AuditLog[];
   
   // Actions
-  setActiveUser: (userId: string) => void;
+  setActiveUser: (userId: string | null) => void;
   addCase: (newCase: Omit<Case, 'id' | 'caseNumber' | 'createdAt' | 'updatedAt'>) => string;
   updateCase: (caseId: string, updates: Partial<Case>) => void;
   addCorrespondence: (correspondence: Omit<Correspondence, 'id' | 'timestamp'>) => void;
@@ -38,6 +38,10 @@ export const useAppStore = create<AppState>()(
   auditLogs: MOCK_AUDIT_LOGS,
 
   setActiveUser: (userId) => {
+    if (userId === null) {
+      set({ activeUser: null });
+      return;
+    }
     const user = get().users.find((u) => u.id === userId);
     if (user) {
       set({ activeUser: user });

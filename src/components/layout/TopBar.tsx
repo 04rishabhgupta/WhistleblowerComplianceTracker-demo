@@ -4,15 +4,7 @@ import { Bell, Search, Menu, LogOut } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { UserProfileDrawer } from './UserProfileDrawer';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -125,44 +117,14 @@ export function TopBar() {
           <span className="sr-only">Notifications</span>
         </Button>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger className="relative flex items-center gap-2 rounded-full border border-border px-2 py-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 hover:bg-accent hover:text-accent-foreground">
+        <UserProfileDrawer>
+          <button className="relative flex items-center gap-2 rounded-full border border-border px-2 py-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 hover:bg-accent hover:text-accent-foreground outline-none">
             <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold text-[10px]">
               {activeUser.avatar}
             </div>
             <span className="hidden text-sm font-medium sm:block">{activeUser.name}</span>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{activeUser.name}</p>
-                  <p className="text-xs leading-none text-muted-foreground">{activeUser.role}</p>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel className="text-xs text-muted-foreground">Switch Persona (Demo)</DropdownMenuLabel>
-              {users.map((user) => (
-                <DropdownMenuItem
-                  key={user.id}
-                  onClick={() => setActiveUser(user.id)}
-                  className="flex items-center justify-between cursor-pointer"
-                >
-                  <span>{user.name}</span>
-                  <span className="text-xs text-muted-foreground">{user.role}</span>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => setActiveUser(null)}
-              className="text-destructive focus:bg-destructive/10 cursor-pointer"
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </button>
+        </UserProfileDrawer>
       </div>
     </header>
   );

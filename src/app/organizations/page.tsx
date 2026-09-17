@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useAppStore } from '@/lib/store';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -130,16 +130,14 @@ export default function OrganizationsPage() {
                     <TableCell className="font-medium">{org.name}</TableCell>
                     <TableCell>{org.intakeEmail}</TableCell>
                     <TableCell className="text-right flex items-center justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
+                      <Link 
+                        href={`/submit-report/${org.id}`} 
+                        target="_blank"
+                        className={buttonVariants({ variant: "outline", size: "sm" })}
                       >
-                        <Link href={`/submit-report/${org.id}`} target="_blank">
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Visit Form
-                        </Link>
-                      </Button>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Visit Form
+                      </Link>
                       <Button
                         variant="outline"
                         size="sm"

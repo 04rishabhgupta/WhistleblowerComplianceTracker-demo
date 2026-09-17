@@ -8,8 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Copy, Plus, Building2 } from 'lucide-react';
+import { Copy, Plus, Building2, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 export default function OrganizationsPage() {
   const { organizations, activeUser, addOrganization } = useAppStore();
@@ -128,7 +129,17 @@ export default function OrganizationsPage() {
                   <TableRow key={org.id}>
                     <TableCell className="font-medium">{org.name}</TableCell>
                     <TableCell>{org.intakeEmail}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right flex items-center justify-end gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                      >
+                        <Link href={`/submit-report/${org.id}`} target="_blank">
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Visit Form
+                        </Link>
+                      </Button>
                       <Button
                         variant="outline"
                         size="sm"

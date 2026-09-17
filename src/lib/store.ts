@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { User, Case, Correspondence, InternalNote, Call, AuditLog, ClientOrganization } from './types';
 import { MOCK_USERS, MOCK_CASES, MOCK_CORRESPONDENCE, MOCK_INTERNAL_NOTES, MOCK_CALLS, MOCK_AUDIT_LOGS, MOCK_ORGANIZATIONS } from './mock-data';
 import { formatISO } from 'date-fns';
@@ -24,7 +25,9 @@ interface AppState {
   addOrganization: (org: Omit<ClientOrganization, 'id'>) => void;
 }
 
-export const useAppStore = create<AppState>((set, get) => ({
+export const useAppStore = create<AppState>()(
+  persist(
+    (set, get) => ({
   activeUser: null, // Default to null to trigger role selector
   users: MOCK_USERS,
   organizations: MOCK_ORGANIZATIONS,
@@ -140,4 +143,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     };
     set((state) => ({ organizations: [...state.organizations, newOrg] }));
   },
-}));
+    }),
+    {
+      name: 'tari-compliance-storage',
+    }
+  )
+);

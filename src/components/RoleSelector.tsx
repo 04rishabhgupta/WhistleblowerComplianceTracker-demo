@@ -12,9 +12,11 @@ import GlobeDemo from '@/components/ui/globe-demo';
 import { FeaturesCarouselDemo } from '@/components/FeaturesCarouselDemo';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
 import { LargeNameFooter } from '@/components/ui/large-name-footer';
+import { useRouter } from 'next/navigation';
 
 export function RoleSelector() {
   const { users, setActiveUser } = useAppStore();
+  const router = useRouter();
 
   const scrollToDemo = () => {
     document.getElementById('demo-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -91,7 +93,7 @@ export function RoleSelector() {
 
           <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
             {users.map((user) => (
-              <div key={user.id} onClick={() => setActiveUser(user.id)} className="cursor-pointer">
+              <div key={user.id} onClick={() => { setActiveUser(user.id); router.push('/dashboard'); }} className="cursor-pointer">
                 <CardSpotlight className="h-full w-full flex flex-col items-center justify-center p-8 text-center group">
                   <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity z-20">
                     <ArrowRight className="w-5 h-5 text-teal-400" />

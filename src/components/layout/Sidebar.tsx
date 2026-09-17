@@ -14,7 +14,7 @@ export function Sidebar({ className }: { className?: string }) {
 
   const getNavItems = () => {
     const baseItems = [
-      { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+      { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     ];
 
     if (activeUser.role === 'Investigator') {

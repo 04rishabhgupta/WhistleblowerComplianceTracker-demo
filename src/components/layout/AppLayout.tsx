@@ -3,13 +3,27 @@
 import { useAppStore } from '@/lib/store';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
-import { RoleSelector } from '../RoleSelector';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { activeUser } = useAppStore();
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
-  if (!activeUser) {
-    return <RoleSelector />;
+  useEffect(() => {
+    setMounted(true);
+    if (!activeUser) {
+      router.push('/');
+    }
+  }, [activeUser, router]);
+
+  if (!mounted || !activeUser) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-background">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
+      </div>
+    );
   }
 
   return (

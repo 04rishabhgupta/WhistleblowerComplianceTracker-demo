@@ -313,7 +313,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label>Business Unit / Department</Label>
-                  <Select value={department} onValueChange={setDepartment}>
+                  <Select value={department} onValueChange={(val) => setDepartment(val || '')}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select Department" />
                     </SelectTrigger>
@@ -340,7 +340,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
 
                 <div className="space-y-2">
                   <Label>Category</Label>
-                  <Select value={category} onValueChange={setCategory}>
+                  <Select value={category} onValueChange={(val) => setCategory(val || '')}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select Category" />
                     </SelectTrigger>
@@ -358,7 +358,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
 
                 <div className="space-y-2">
                   <Label>Estimated Severity</Label>
-                  <Select value={severity} onValueChange={setSeverity}>
+                  <Select value={severity} onValueChange={(val) => setSeverity(val || '')}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select Severity" />
                     </SelectTrigger>

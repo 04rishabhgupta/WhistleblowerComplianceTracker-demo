@@ -23,6 +23,7 @@ interface AppState {
   linkCallToCase: (callId: string, caseId: string) => void;
   addAuditLog: (log: Omit<AuditLog, 'id' | 'timestamp'>) => void;
   addOrganization: (org: Omit<ClientOrganization, 'id'>) => void;
+  addUser: (user: Omit<User, 'id'>) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -146,6 +147,14 @@ export const useAppStore = create<AppState>()(
       id: `org_${Math.random().toString(36).substr(2, 9)}`,
     };
     set((state) => ({ organizations: [...state.organizations, newOrg] }));
+  },
+
+  addUser: (userData) => {
+    const newUser: User = {
+      ...userData,
+      id: `user_${Math.random().toString(36).substr(2, 9)}`,
+    };
+    set((state) => ({ users: [...state.users, newUser] }));
   },
     }),
     {

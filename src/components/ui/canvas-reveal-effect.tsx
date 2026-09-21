@@ -4,6 +4,20 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
 
+if (typeof console !== "undefined") {
+  const originalConsoleWarn = console.warn;
+  console.warn = (...args) => {
+    if (
+      args[0] &&
+      typeof args[0] === "string" &&
+      args[0].includes("THREE.Clock: This module has been deprecated")
+    ) {
+      return;
+    }
+    originalConsoleWarn(...args);
+  };
+}
+
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,
   opacities = [0.3, 0.3, 0.3, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 1],

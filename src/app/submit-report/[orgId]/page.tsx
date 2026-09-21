@@ -17,7 +17,7 @@ type Step = 'LANDING' | 'CONSENT' | 'FORM' | 'SUCCESS';
 
 export default function SubmitReportPage({ params }: { params: Promise<{ orgId: string }> }) {
   const unwrappedParams = use(params);
-  const { organizations, addCase } = useAppStore();
+  const { organizations, addCase, addEvidence } = useAppStore();
   const [organization, setOrganization] = useState<any>(null);
   
   const [currentStep, setCurrentStep] = useState<Step>('LANDING');
@@ -37,6 +37,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
   
   const [password, setPassword] = useState('');
   const [generatedCaseNumber, setGeneratedCaseNumber] = useState('');
+  const [evidenceFiles, setEvidenceFiles] = useState<File[]>([]);
 
   useEffect(() => {
     const orgId = unwrappedParams.orgId;
@@ -55,7 +56,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
        fullDescription += `\n\n[System Note: Reporter set a tracking password]`;
     }
 
-    const { caseNumber: caseNum } = addCase({
+    const { id: newCaseId, caseNumber: caseNum } = addCase({
       organizationId: organization.id,
       status: 'Received',
       description: fullDescription,
@@ -67,6 +68,16 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
       reporterEmail: !isAnonymous ? reporterEmail.trim() : undefined,
       reporterPhone: !isAnonymous ? reporterPhone.trim() : undefined,
       assigneeIds: [],
+    });
+
+    evidenceFiles.forEach(file => {
+      addEvidence({
+        caseId: newCaseId,
+        filename: file.name,
+        fileSize: (file.size / 1024 / 1024).toFixed(2) + ' MB',
+        uploadedBy: !isAnonymous ? (reporterName.trim() || reporterEmail.trim() || 'Reporter') : 'Reporter',
+        description: 'File attached to initial report',
+      });
     });
 
     setGeneratedCaseNumber(caseNum);
@@ -306,7 +317,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
 
   // STEP 3: FORM PAGE
   return (
-    <div className="dark min-h-screen bg-black text-foreground font-sans py-12 px-4 sm:px-6 lg:px-8 selection:bg-accent selection:text-white">
+    <div className="dark min-h-screen bg-slate-950 text-foreground font-sans py-12 px-4 sm:px-6 lg:px-8 selection:bg-accent selection:text-white">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Incident Report Form</h2>
@@ -314,12 +325,12 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
           <p className="text-sm text-red-400 mt-4">* indicates mandatory fields</p>
         </div>
 
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
           <form onSubmit={handleSubmit}>
             <div className="p-8 space-y-10">
               
               {/* Anonymity Section */}
-              <div className="space-y-6 bg-black/40 p-6 rounded-xl border border-white/5">
+              <div className="space-y-6 bg-slate-800/40 p-6 rounded-xl border border-white/10">
                 <div className="space-y-3">
                   <Label className="text-lg text-white">Do you wish to remain Anonymous for this report? <span className="text-red-500">*</span></Label>
                   <div className="flex gap-6 pt-2">
@@ -338,15 +349,15 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-white/10">
                     <div className="space-y-2">
                       <Label htmlFor="reporterName" className="text-slate-300">Full Name</Label>
-                      <Input id="reporterName" value={reporterName} onChange={(e) => setReporterName(e.target.value)} className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500" />
+                      <Input id="reporterName" value={reporterName} onChange={(e) => setReporterName(e.target.value)} className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="reporterEmail" className="text-slate-300">Email Address</Label>
-                      <Input id="reporterEmail" type="email" value={reporterEmail} onChange={(e) => setReporterEmail(e.target.value)} className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500" />
+                      <Input id="reporterEmail" type="email" value={reporterEmail} onChange={(e) => setReporterEmail(e.target.value)} className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500" />
                     </div>
                     <div className="space-y-2 sm:col-span-2">
                       <Label htmlFor="reporterPhone" className="text-slate-300">Phone Number</Label>
-                      <Input id="reporterPhone" value={reporterPhone} onChange={(e) => setReporterPhone(e.target.value)} className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500" />
+                      <Input id="reporterPhone" value={reporterPhone} onChange={(e) => setReporterPhone(e.target.value)} className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500" />
                     </div>
                   </motion.div>
                 )}
@@ -357,10 +368,10 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
                 <div className="space-y-2">
                   <Label className="text-slate-300">Business Unit / Department</Label>
                   <Select value={department} onValueChange={(val) => setDepartment(val || '')}>
-                    <SelectTrigger className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500">
+                    <SelectTrigger className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500">
                       <SelectValue placeholder="Select Department" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-900 border-slate-800 text-white">
+                    <SelectContent className="bg-slate-800 border-slate-700 text-white">
                       <SelectItem value="Sales">Sales</SelectItem>
                       <SelectItem value="Marketing">Marketing</SelectItem>
                       <SelectItem value="Finance">Finance</SelectItem>
@@ -378,17 +389,17 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
                     type="date" 
                     value={incidentDate} 
                     onChange={(e) => setIncidentDate(e.target.value)} 
-                    className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500 [color-scheme:dark]"
+                    className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500 [color-scheme:dark]"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-slate-300">Category</Label>
                   <Select value={category} onValueChange={(val) => setCategory(val || '')}>
-                    <SelectTrigger className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500">
+                    <SelectTrigger className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500">
                       <SelectValue placeholder="Select Category" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-900 border-slate-800 text-white">
+                    <SelectContent className="bg-slate-800 border-slate-700 text-white">
                       <SelectItem value="Workplace Conduct">Workplace Conduct</SelectItem>
                       <SelectItem value="Financial Misconduct">Financial Misconduct</SelectItem>
                       <SelectItem value="Health & Safety">Health & Safety</SelectItem>
@@ -403,10 +414,10 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
                 <div className="space-y-2">
                   <Label className="text-slate-300">Estimated Severity</Label>
                   <Select value={severity} onValueChange={(val) => setSeverity(val || '')}>
-                    <SelectTrigger className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500">
+                    <SelectTrigger className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500">
                       <SelectValue placeholder="Select Severity" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-900 border-slate-800 text-white">
+                    <SelectContent className="bg-slate-800 border-slate-700 text-white">
                       <SelectItem value="Low">Low</SelectItem>
                       <SelectItem value="Medium">Medium</SelectItem>
                       <SelectItem value="High">High</SelectItem>
@@ -426,9 +437,29 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
                   rows={8}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="resize-y bg-slate-950 border-slate-800 text-white text-base p-4 focus-visible:ring-teal-500"
+                  className="resize-y bg-slate-900 border-slate-700 text-white text-base p-4 focus-visible:ring-teal-500"
                   placeholder="Type your detailed report here..."
                 />
+              </div>
+
+              {/* Evidence Section */}
+              <div className="space-y-3 pt-6 border-t border-white/10">
+                <Label htmlFor="evidence" className="text-lg text-white">Attach Evidence (Optional)</Label>
+                <p className="text-sm text-slate-400">Upload documents, screenshots, or videos that support your report.</p>
+                <Input 
+                  id="evidence" 
+                  type="file" 
+                  multiple
+                  onChange={(e) => setEvidenceFiles(Array.from(e.target.files || []))}
+                  className="bg-slate-900 border-slate-700 text-white focus-visible:ring-teal-500 cursor-pointer file:text-teal-400 file:bg-slate-800 file:border-0 file:mr-4 file:px-4 file:py-2 file:rounded-full hover:file:bg-slate-700"
+                />
+                {evidenceFiles.length > 0 && (
+                   <ul className="text-sm text-slate-300 mt-2 space-y-1">
+                     {evidenceFiles.map((file, i) => (
+                       <li key={i}>- {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)</li>
+                     ))}
+                   </ul>
+                )}
               </div>
 
               {/* Security Section */}

@@ -57,7 +57,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
 
     const caseNum = addCase({
       organizationId: organization.id,
-      status: 'New — Needs Triage',
+      status: 'Received',
       description: fullDescription,
       severity: (severity as any) || 'Unrated',
       category: category || 'Other',

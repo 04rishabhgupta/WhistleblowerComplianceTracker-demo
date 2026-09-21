@@ -27,7 +27,7 @@ export default function ReportsPage() {
 
   // --- KPIs ---
   const totalCases = filteredCases.length;
-  const openCases = filteredCases.filter(c => ['New — Needs Triage', 'In Progress', 'Under Investigation'].includes(c.status)).length;
+  const openCases = filteredCases.filter(c => ['Received', 'Acknowledged', 'Information Sought', 'Under Analysis', 'Re-opened'].includes(c.status)).length;
   const criticalCases = filteredCases.filter(c => c.severity === 'Critical').length;
   
   // --- Data Aggregation ---
@@ -70,9 +70,10 @@ export default function ReportsPage() {
   }, {} as Record<string, number>);
   const statusColors: Record<string, string> = {
     'New — Needs Triage': '#3b82f6',
-    'In Progress': '#f59e0b',
+    'Acknowledged': '#f59e0b',
+    'Information Sought': '#eab308',
     'Under Investigation': '#8b5cf6',
-    'Resolved': '#10b981',
+    'PAR Prepared': '#10b981',
     'Closed': '#64748b'
   };
   const statusData = Object.entries(statusCounts).map(([name, value]) => ({

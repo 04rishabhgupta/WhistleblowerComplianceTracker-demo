@@ -28,7 +28,7 @@ export function TopBar() {
 
     addCase({
       organizationId: targetOrgId,
-      status: 'New — Needs Triage',
+      status: 'Received',
       description: emailContent,
       source: 'Email',
       reporterEmail: 'anonymous_sender@protonmail.com',

@@ -13,7 +13,7 @@ export function InvestigatorDashboard() {
 
   if (!activeUser) return null;
 
-  const intakeCases = cases.filter(c => c.status === 'New — Needs Triage');
+  const intakeCases = cases.filter(c => c.status === 'Received');
   const recentCases = cases.slice(0, 5).map(c => {
     return {
       ...c,
@@ -28,8 +28,8 @@ export function InvestigatorDashboard() {
     acc[c.organizationName].push(c);
     return acc;
   }, {} as Record<string, typeof recentCases>);
-  const openCases = cases.filter(c => c.status !== 'Resolved' && c.status !== 'Closed');
-  const needsTriage = cases.filter(c => c.status === 'New — Needs Triage');
+  const openCases = cases.filter(c => c.status !== 'PAR Prepared' && c.status !== 'Closed');
+  const needsTriage = cases.filter(c => c.status === 'Received');
   const highSeverity = cases.filter(c => c.severity === 'High' || c.severity === 'Critical');
   const unlinkedCalls = calls.filter(c => !c.caseId);
 
@@ -45,10 +45,11 @@ export function InvestigatorDashboard() {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'New — Needs Triage': return <Badge className="bg-blue-500 hover:bg-blue-600">New</Badge>;
-      case 'In Progress':
-      case 'Under Investigation': return <Badge className="bg-amber-500 hover:bg-amber-600">{status}</Badge>;
-      case 'Resolved':
+      case 'Received': return <Badge className="bg-blue-500 hover:bg-blue-600">New</Badge>;
+      case 'Acknowledged':
+      case 'Information Sought':
+      case 'Under Analysis': return <Badge className="bg-amber-500 hover:bg-amber-600">{status}</Badge>;
+      case 'PAR Prepared':
       case 'Closed': return <Badge className="bg-green-600 hover:bg-green-700">{status}</Badge>;
       default: return <Badge>{status}</Badge>;
     }

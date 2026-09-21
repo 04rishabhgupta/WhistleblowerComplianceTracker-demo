@@ -121,7 +121,7 @@ function LinkCallDialog({ callId }: { callId: string }) {
   const { cases, linkCallToCase } = useAppStore();
   const [selectedCase, setSelectedCase] = useState('');
 
-  const activeCases = cases.filter(c => c.status !== 'Resolved' && c.status !== 'Closed');
+  const activeCases = cases.filter(c => c.status !== 'PAR Prepared' && c.status !== 'Closed');
 
   const handleLink = () => {
     if (!selectedCase) return;

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User, Case, Correspondence, InternalNote, Call, AuditLog, ClientOrganization } from './types';
-import { MOCK_USERS, MOCK_CASES, MOCK_CORRESPONDENCE, MOCK_INTERNAL_NOTES, MOCK_CALLS, MOCK_AUDIT_LOGS, MOCK_ORGANIZATIONS } from './mock-data';
+import { User, Case, Correspondence, InternalNote, Call, AuditLog, ClientOrganization, Evidence } from './types';
+import { MOCK_USERS, MOCK_CASES, MOCK_CORRESPONDENCE, MOCK_INTERNAL_NOTES, MOCK_CALLS, MOCK_AUDIT_LOGS, MOCK_ORGANIZATIONS, MOCK_EVIDENCE } from './mock-data';
 import { formatISO } from 'date-fns';
 
 interface AppState {
@@ -13,6 +13,8 @@ interface AppState {
   internalNotes: InternalNote[];
   calls: Call[];
   auditLogs: AuditLog[];
+  evidence: Evidence[];
+  addEvidence: (evidence: Omit<Evidence, 'id' | 'timestamp'>) => void;
   
   // Actions
   setActiveUser: (userId: string | null) => void;
@@ -37,6 +39,7 @@ export const useAppStore = create<AppState>()(
   internalNotes: MOCK_INTERNAL_NOTES,
   calls: MOCK_CALLS,
   auditLogs: MOCK_AUDIT_LOGS,
+  evidence: MOCK_EVIDENCE,
 
   setActiveUser: (userId) => {
     if (userId === null) {
@@ -139,6 +142,22 @@ export const useAppStore = create<AppState>()(
       timestamp: formatISO(new Date()),
     };
     set((state) => ({ auditLogs: [newLog, ...state.auditLogs] }));
+  },
+
+  
+  addEvidence: (data) => {
+    const newEv: Evidence = {
+      ...data,
+      id: `ev_${Math.random().toString(36).substr(2, 9)}`,
+      timestamp: formatISO(new Date()),
+    };
+    set((state) => ({ evidence: [...state.evidence, newEv] }));
+    
+    get().addAuditLog({
+      caseId: data.caseId,
+      actorId: get().activeUser?.id || 'System',
+      action: `Evidence file uploaded: ${data.filename}`,
+    });
   },
 
   addOrganization: (orgData) => {

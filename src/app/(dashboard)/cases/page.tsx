@@ -32,10 +32,12 @@ export default function CasesPage() {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'New — Needs Triage': return <Badge className="bg-blue-500 hover:bg-blue-600">New</Badge>;
-      case 'In Progress':
-      case 'Under Investigation': return <Badge className="bg-amber-500 hover:bg-amber-600">{status}</Badge>;
-      case 'Resolved':
+      case 'Received':
+      case 'Re-opened': return <Badge className="bg-blue-500 hover:bg-blue-600">New</Badge>;
+      case 'Acknowledged':
+      case 'Information Sought':
+      case 'Under Analysis': return <Badge className="bg-amber-500 hover:bg-amber-600">{status}</Badge>;
+      case 'PAR Prepared':
       case 'Closed': return <Badge className="bg-green-600 hover:bg-green-700">{status}</Badge>;
       default: return <Badge>{status}</Badge>;
     }

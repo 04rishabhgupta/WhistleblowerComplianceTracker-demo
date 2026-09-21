@@ -15,9 +15,16 @@ export interface User {
   avatar: string;
 }
 
-export type CaseStatus = 'New — Needs Triage' | 'In Progress' | 'Under Investigation' | 'Resolved' | 'Closed';
+export type CaseStatus = 'Received' | 'Acknowledged' | 'Information Sought' | 'Under Analysis' | 'PAR Prepared' | 'Closed' | 'Re-opened';
 export type CaseSeverity = 'Low' | 'Medium' | 'High' | 'Critical';
 export type CaseSource = 'Email' | 'Hotline';
+
+export interface PAR {
+  assessmentDetails: string;
+  evidenceAnalyzed: string;
+  recommendations: string;
+  submittedAt: string;
+}
 
 export interface Case {
   id: string;
@@ -32,6 +39,7 @@ export interface Case {
   source: CaseSource;
   reporterEmail?: string;
   reporterPhone?: string;
+  par?: PAR;
   assigneeIds: string[];
   createdAt: string;
   updatedAt: string;
@@ -73,3 +81,14 @@ export interface AuditLog {
   action: string;
   timestamp: string;
 }
+
+export interface Evidence {
+  id: string;
+  caseId: string;
+  filename: string;
+  fileSize: string; // e.g., "2.4 MB"
+  uploadedBy: string | 'Reporter';
+  timestamp: string;
+  description?: string;
+}
+

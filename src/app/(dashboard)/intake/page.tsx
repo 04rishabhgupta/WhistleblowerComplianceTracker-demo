@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function IntakeQueuePage() {
   const { cases, activeUser, organizations } = useAppStore();
 
-  const intakeCases = cases.filter(c => c.status === 'New — Needs Triage').map(c => ({
+  const intakeCases = cases.filter(c => c.status === 'Received').map(c => ({
     ...c,
     organizationName: organizations.find(org => org.id === c.organizationId)?.name || 'Unknown'
   }));

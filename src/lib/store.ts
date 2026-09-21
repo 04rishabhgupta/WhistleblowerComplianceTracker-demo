@@ -18,7 +18,7 @@ interface AppState {
   
   // Actions
   setActiveUser: (userId: string | null) => void;
-  addCase: (newCase: Omit<Case, 'id' | 'caseNumber' | 'createdAt' | 'updatedAt'>) => string;
+  addCase: (newCase: Omit<Case, 'id' | 'caseNumber' | 'createdAt' | 'updatedAt'>) => { id: string; caseNumber: string };
   updateCase: (caseId: string, updates: Partial<Case>) => void;
   addCorrespondence: (correspondence: Omit<Correspondence, 'id' | 'timestamp'>) => void;
   addInternalNote: (note: Omit<InternalNote, 'id' | 'timestamp'>) => void;
@@ -74,7 +74,7 @@ export const useAppStore = create<AppState>()(
       action: `Case automatically created from ${newCaseData.source} intake.`
     });
 
-    return caseNumber;
+    return { id: newId, caseNumber };
   },
 
   updateCase: (caseId, updates) => {

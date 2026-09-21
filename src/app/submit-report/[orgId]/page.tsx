@@ -55,7 +55,7 @@ export default function SubmitReportPage({ params }: { params: Promise<{ orgId: 
        fullDescription += `\n\n[System Note: Reporter set a tracking password]`;
     }
 
-    const caseNum = addCase({
+    const { caseNumber: caseNum } = addCase({
       organizationId: organization.id,
       status: 'Received',
       description: fullDescription,

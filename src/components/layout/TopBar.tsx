@@ -16,17 +16,18 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 export function TopBar() {
-  const { activeUser, users, organizations, setActiveUser, addCase } = useAppStore();
+  const { activeUser, users, organizations, setActiveUser, addCase, addEvidence } = useAppStore();
   const [isSimulateOpen, setIsSimulateOpen] = useState(false);
   const [emailContent, setEmailContent] = useState('');
   const [targetOrgId, setTargetOrgId] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   if (!activeUser) return null;
 
   const handleSimulateEmail = () => {
     if (!emailContent.trim() || !targetOrgId) return;
 
-    addCase({
+    const { id: newCaseId } = addCase({
       organizationId: targetOrgId,
       status: 'Received',
       description: emailContent,
@@ -35,12 +36,23 @@ export function TopBar() {
       assigneeIds: [],
     });
 
+    if (selectedFile) {
+      addEvidence({
+        caseId: newCaseId,
+        filename: selectedFile.name,
+        fileSize: (selectedFile.size / 1024 / 1024).toFixed(2) + ' MB',
+        uploadedBy: 'anonymous_sender@protonmail.com',
+        description: 'File attached to incoming email',
+      });
+    }
+
     toast('New Case Created', {
       description: 'Incoming email was automatically converted to a case.',
     });
 
     setEmailContent('');
     setTargetOrgId('');
+    setSelectedFile(null);
     setIsSimulateOpen(false);
   };
 
@@ -100,6 +112,14 @@ export function TopBar() {
                   onChange={(e) => setEmailContent(e.target.value)}
                   className="min-h-[150px]"
                 />
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="evidenceFile">Attach Evidence (Optional)</Label>
+                  <Input 
+                    id="evidenceFile" 
+                    type="file" 
+                    onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                  />
+                </div>
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setIsSimulateOpen(false)}>Cancel</Button>

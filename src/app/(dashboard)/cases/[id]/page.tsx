@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppStore } from '@/lib/store';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -27,6 +27,7 @@ const LIFECYCLE_STAGES = [
 
 export default function CaseDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params);
+  const router = useRouter();
   const { cases, correspondences, internalNotes, auditLogs, calls, evidence, activeUser, organizations, addCorrespondence, addInternalNote, addEvidence } = useAppStore();
   const caseData = cases.find((c) => c.id === unwrappedParams.id);
   
@@ -120,11 +121,9 @@ export default function CaseDetailPage({ params }: { params: Promise<{ id: strin
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/">
-          <Button variant="outline" size="icon">
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-        </Link>
+        <Button variant="outline" size="icon" onClick={() => router.back()}>
+          <ArrowLeft className="h-4 w-4" />
+        </Button>
         <div className="flex-1">
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold tracking-tight text-primary">Case {caseData.caseNumber}</h1>

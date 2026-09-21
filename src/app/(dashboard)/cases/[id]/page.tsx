@@ -325,7 +325,7 @@ export default function CaseDetailPage({ params }: { params: Promise<{ id: strin
                 )}
               </div>
               
-              {activeUser.role !== 'Investigator' && (
+              {caseData.status !== 'Closed' && caseData.status !== 'Received' && (
                 <div className="mt-6 border-t pt-4">
                   <CorrespondenceComposer caseId={caseData.id} />
                 </div>

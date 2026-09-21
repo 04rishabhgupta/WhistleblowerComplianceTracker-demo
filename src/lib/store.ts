@@ -177,7 +177,7 @@ export const useAppStore = create<AppState>()(
   },
     }),
     {
-      name: 'tari-compliance-storage',
+      name: 'tari-compliance-storage-v2',
     }
   )
 );
